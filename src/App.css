@@ -1,0 +1,79 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem;
+  text-align: left;
+}
+
+.game-container {
+  max-width: 400px;
+}
+
+h1, h4 {
+  margin: 0 auto;
+}
+
+.slider-container {
+  display: grid;
+  grid-template-areas:  "slider-instruction slider-instruction slider-instruction"
+                        "num slider slider"
+                        "score score score";
+  align-items: center;
+  grid-template-columns: 35px auto auto;
+  padding: 20px 0;
+}
+
+h4 {
+  grid-area: num;
+  margin: 0;
+  text-align: left;
+}
+
+.slider {
+  grid-area: slider;
+}
+
+.slider-score {
+  grid-area: score;
+}
+
+.slider-instruction {
+  text-align: right;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  grid-area: slider-instruction;
+}
+
+.score-modal {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  height: 100%;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.score-modal-box {
+  max-width: 450px;
+  margin: 0 auto;
+  padding: 30px;
+  border: none;
+  background: #242424;
+}
+
+.total-score-free-play {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 30px;
+}
+
+@media (prefers-color-scheme: light) {
+
+.score-modal-box {
+  background: white;
+}
+
+}
