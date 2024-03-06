@@ -2,6 +2,7 @@ import { Box, Icon, Modal, Slider } from "@mui/material";
 import { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { sliderOneTargets, sliderTwoTargets, sliderThreeTargets, sliderFourTargets, sliderFiveTargets } from "./DailyTargets";
+import Stats from "./Stats";
 
 export default function DailyGame({ gameId, gameDay }) {
   const [sliderOneValue, setSliderOneValue] = useState(0);
@@ -55,7 +56,7 @@ export default function DailyGame({ gameId, gameDay }) {
     if(gameCount === 5) {
       setOpen(true)
       console.log(totalScore, "<-------Total Score")
-      const gameStats = [gameId, totalScore, 
+      const gameStats = [gameId, totalScore + score, 
         sliderOneTarget, sliderOneValue, Math.abs(sliderOneValue-sliderOneTarget),
         sliderTwoTarget, sliderTwoValue, Math.abs(sliderTwoValue-sliderTwoTarget),
         sliderThreeTarget, sliderThreeValue, Math.abs(sliderThreeValue-sliderThreeTarget),
@@ -64,10 +65,33 @@ export default function DailyGame({ gameId, gameDay }) {
       ]
       const gameStatArr = JSON.stringify(gameStats)
       localStorage.setItem('gameStats', gameStatArr)
+      updateScoreHistory(totalScore)
+      setGameCount(0)
     }
   }, [gameCount])
-
-
+  
+  const storedScoreHistory = localStorage.getItem('scoreHistory');
+  let scoreHistory = storedScoreHistory ? JSON.parse(storedScoreHistory) : [];
+  
+  const updateScoreHistory = (score) => {
+    if (score === 0) {
+      scoreHistory[0] = (scoreHistory[0] || 0) + 1;
+    } else if (totalScore>= 1 && totalScore<= 10) {
+      scoreHistory[1] = (scoreHistory[1] || 0) + 1;
+    } else if (totalScore>= 11 && totalScore<= 20) {
+      scoreHistory[2] = (scoreHistory[2] || 0) + 1;
+    } else if (totalScore>= 21 && totalScore<= 30) {
+      scoreHistory[3] = (scoreHistory[3] || 0) + 1;
+    } else if (totalScore>= 31 && totalScore<= 40) {
+      scoreHistory[4] = (scoreHistory[4] || 0) + 1;
+    } else if (totalScore>= 41 && totalScore<= 50) {
+      scoreHistory[5] = (scoreHistory[5] || 0) + 1;
+    } else {
+      scoreHistory[6] = (scoreHistory[6] || 0) + 1;
+    }
+  
+    localStorage.setItem('scoreHistory', JSON.stringify(scoreHistory));
+  };
   
   useEffect(() => {
     const storedGameStatsString = localStorage.getItem('gameStats');
@@ -82,9 +106,6 @@ export default function DailyGame({ gameId, gameDay }) {
       }
     }
   })
-
-
-  const handleOpen = () => setOpen(true);
 
   const handleClose = () => setOpen(false);
 
@@ -256,14 +277,6 @@ export default function DailyGame({ gameId, gameDay }) {
             </>
           )}
         </section>
-        {gameCount === 5 ? (
-          !open ? (
-            <section>
-              <button onClick={handleOpen}>Stats</button>
-            </section>
-          ) : null
-        ) : null}
-        <section></section>
       </section>
       <Modal
         className="score-modal"
@@ -278,44 +291,7 @@ export default function DailyGame({ gameId, gameDay }) {
             className="close-modal"
             component={CloseIcon}
           ></Icon>
-          {totalScore === 0 ? (
-            <p style={{ fontSize: 18 }}>
-              Wow! You are too good. Not many people score 0.
-            </p>
-          ) : null}
-          {totalScore > 0 ? (
-            totalScore <= 10 ? (
-              <p style={{ fontSize: 18 }}>
-                Very good. You are good. Getting under 10 is an impressive
-                attempt.
-              </p>
-            ) : null
-          ) : null}
-          {totalScore > 10 ? (
-            totalScore <= 20 ? (
-              <p style={{ fontSize: 18 }}>
-                Pretty pretty pretty good. Can you get under 10 tomorrow? We
-                believe.
-              </p>
-            ) : null
-          ) : null}
-          {totalScore > 20 ? (
-            totalScore <= 40 ? (
-              <p style={{ fontSize: 18 }}>
-                It is not the end of the world. You can hold your head up hight
-                and say, I did my best.
-              </p>
-            ) : null
-          ) : null}
-          {totalScore > 40 ? (
-            <p style={{ fontSize: 18 }}>
-              Be honest. How do you think you you did? Over 40, well it could be
-              better. Still you had fun right? Right?.
-            </p>
-          ) : null}
-          <p style={{ fontSize: 20, fontWeight: 600 }}>
-            Your total score is {totalScore}
-          </p>
+          <Stats />
         </Box>
       </Modal>
     </>

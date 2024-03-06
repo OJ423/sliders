@@ -68,6 +68,29 @@ h4 {
   display: grid;
   grid-template-columns: auto auto;
   gap: 30px;
+  box-sizing: border-box;
+}
+
+.stats-total-container h1 {
+  font-size: 28px;
+  margin-top: 20px;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: 50% 25% 25%;
+  gap: 10px;
+  box-sizing: border-box;
+  align-items: center;
+}
+.stats-row p {
+  font-weight: 600;
+  text-align: center;
+}
+
+.results-chart {
+  width: 200px;
+  height: 200px;
 }
 
 @media (prefers-color-scheme: light) {

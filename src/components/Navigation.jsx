@@ -9,6 +9,8 @@ import lightLogo from '../assets/sliders-logo-white.png'
 import darkLogo from '../assets/sliders-logo-black.png'
 
 export default function Navigation(){
+  const storedGameStatsString = localStorage.getItem('gameStats');
+  const storedGameStatsArr = JSON.parse(storedGameStatsString);
 
   return(
     <nav className="navbar">
@@ -29,7 +31,7 @@ export default function Navigation(){
           <ul>
             <li><NavLink to="/"><Icon component={ScheduleIcon} /></NavLink></li>
             <li><NavLink to="/practice"><Icon component={AllInclusiveIcon} /></NavLink></li>
-            <li><NavLink to="/stats"><Icon component={QueryStatsIcon}/></NavLink></li>
+            {storedGameStatsArr ? <li><NavLink to="/stats"><Icon component={QueryStatsIcon}/></NavLink></li> : null }
             <li><NavLink to="/help"><Icon component={QuestionMarkIcon}/></NavLink></li>
           </ul>
         </div>
