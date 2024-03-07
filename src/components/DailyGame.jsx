@@ -1,8 +1,7 @@
-import { Box, Icon, Modal, Slider } from "@mui/material";
+import { Slider } from "@mui/material";
 import { useEffect, useState } from "react";
-import CloseIcon from "@mui/icons-material/Close";
 import { sliderOneTargets, sliderTwoTargets, sliderThreeTargets, sliderFourTargets, sliderFiveTargets } from "./DailyTargets";
-import Stats from "./Stats";
+import { useNavigate } from "react-router-dom";
 
 export default function DailyGame({ gameId, gameDay }) {
   const [sliderOneValue, setSliderOneValue] = useState(0);
@@ -10,18 +9,18 @@ export default function DailyGame({ gameId, gameDay }) {
   const [sliderThreeValue, setSliderThreeValue] = useState(0);
   const [sliderFourValue, setSliderFourValue] = useState(0);
   const [sliderFiveValue, setSliderFiveValue] = useState(0);
-
+  
   const [sliderOneTarget, setSliderOneTarget] = useState(sliderOneTargets[gameDay]);
   const [sliderTwoTarget, setSliderTwoTarget] = useState(sliderTwoTargets[gameDay]);
   const [sliderThreeTarget, setSliderThreeTarget] = useState(sliderThreeTargets[gameDay]);
   const [sliderFourTarget, setSliderFourTarget] = useState(sliderFourTargets[gameDay]);
   const [sliderFiveTarget, setSliderFiveTarget] = useState(sliderFiveTargets[gameDay]);
-
+  
   const [score, setScore] = useState(0);
   const [totalScore, setTotalScore] = useState(0);
   const [gameCount, setGameCount] = useState(0);
-  const [open, setOpen] = useState(false);
-
+  const navigate = useNavigate()
+  
   const handleSliderOneChange = (event, newValue) => {
     setSliderOneValue(newValue);
     setScore(Math.abs(newValue - sliderOneTarget));
@@ -54,8 +53,6 @@ export default function DailyGame({ gameId, gameDay }) {
 
   useEffect(() => {
     if(gameCount === 5) {
-      setOpen(true)
-      console.log(totalScore, "<-------Total Score")
       const gameStats = [gameId, totalScore + score, 
         sliderOneTarget, sliderOneValue, Math.abs(sliderOneValue-sliderOneTarget),
         sliderTwoTarget, sliderTwoValue, Math.abs(sliderTwoValue-sliderTwoTarget),
@@ -67,6 +64,7 @@ export default function DailyGame({ gameId, gameDay }) {
       localStorage.setItem('gameStats', gameStatArr)
       updateScoreHistory(totalScore)
       setGameCount(0)
+      navigate("/stats")
     }
   }, [gameCount])
   
@@ -106,8 +104,6 @@ export default function DailyGame({ gameId, gameDay }) {
       }
     }
   })
-
-  const handleClose = () => setOpen(false);
 
   return (
     <>
@@ -278,22 +274,6 @@ export default function DailyGame({ gameId, gameDay }) {
           )}
         </section>
       </section>
-      <Modal
-        className="score-modal"
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="sliders game pop up with final score"
-        aria-describedby="final scores in the slider game"
-      >
-        <Box className="score-modal-box">
-          <Icon
-            onClick={handleClose}
-            className="close-modal"
-            component={CloseIcon}
-          ></Icon>
-          <Stats />
-        </Box>
-      </Modal>
     </>
   );
 }

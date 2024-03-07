@@ -3,10 +3,11 @@
   margin: 0 auto;
   padding: 1rem;
   text-align: left;
+  width: 100%;
 }
 
 .game-container {
-  max-width: 400px;
+  max-width: 450px;
 }
 
 h1, h4 {
@@ -14,13 +15,14 @@ h1, h4 {
 }
 
 .slider-container {
+  width: 100%;
   display: grid;
   grid-template-areas:  "slider-instruction slider-instruction slider-instruction"
                         "num slider slider"
                         "score score score";
   align-items: center;
   grid-template-columns: 35px auto auto;
-  padding: 20px 0;
+  padding: 10px 0;
 }
 
 h4 {
@@ -71,6 +73,10 @@ h4 {
   box-sizing: border-box;
 }
 
+.stats-total-container {
+  width: 100%;
+}
+
 .stats-total-container h1 {
   font-size: 28px;
   margin-top: 20px;
@@ -89,14 +95,59 @@ h4 {
 }
 
 .results-chart {
-  width: 200px;
-  height: 200px;
+  width: 100%;
+  height: 300px;
+}
+
+.stats-summary {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 14% 14% 14% 14% 14% 14% 14%;
+  gap: 1px;
+  box-sizing: border-box;
+  align-items: flex-start;
+}
+
+.stats-box {
+  border: solid 1px #42f5a7;
+  border-radius: 5px;
+  text-align: center;
+  height: 100px;
+}
+
+.stats-percentage {
+  background: #42f5a7;
+  color: #242424;
+  font-size: 18px;
+  margin: 0;
+}
+
+.stats-box p {
+  font-weight: 600;
+  font-size: 0.7rem;
+  margin: 7px;
 }
 
 @media (prefers-color-scheme: light) {
-
-.score-modal-box {
-  background: white;
+  .score-modal-box {
+    background: white;
+  }
 }
 
+@media only screen and (min-width: 768px) {
+  #root {
+    width: 482px;
+  }
+  .results-chart {
+    height: 400px;
+  }
+  .stats-total-container {
+    width: 450px;
+  }
+  .slider-container {
+    width:450px
+  }
+  .stats-box {
+    height: auto;
+  }
 }
