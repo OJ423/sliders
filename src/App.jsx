@@ -6,6 +6,7 @@ import Stats from './components/Stats'
 import Navigation from './components/Navigation'
 import Help from './components/Help'
 import { useEffect, useState } from 'react'
+import Footer from './components/Footer'
 
 
 function App() {
@@ -19,9 +20,9 @@ function App() {
 
   useEffect(() => {
     if (!scoreHistory) {
-      const emptyScores = [0,0,0,0,0,0,0]
+      const emptyScores = [0,0,0,0,0,0]
       localStorage.setItem('scoreHistory', JSON.stringify(emptyScores))
-    } 
+    }
     setGameId((currentID) => currentID + gameDay +1);
   }, []);
 
@@ -34,6 +35,7 @@ function App() {
       <Route path='/stats' element={<Stats/>} />
       <Route path='/help' element={<Help/>} />
     </Routes>
+    <Footer/>
     </>
   )
 

@@ -20,40 +20,44 @@ export default function DailyGame({ gameId, gameDay }) {
   const [totalScore, setTotalScore] = useState(0);
   const [gameCount, setGameCount] = useState(0);
   const navigate = useNavigate()
+  const [showTotal, setShowTotal] = useState(false)
   
   const handleSliderOneChange = (event, newValue) => {
-    setSliderOneValue(newValue);
-    setScore(Math.abs(newValue - sliderOneTarget));
-    setGameCount((currentCount) => currentCount + 1);
+    const roundScore = Math.round(newValue)
+    setSliderOneValue(roundScore);
+    setScore(Math.abs(roundScore - sliderOneTarget));
+    if(roundScore > 0) {setGameCount((currentCount) => currentCount + 1)}
   };
   const handleSliderTwoChange = (event, newValue) => {
-    setSliderTwoValue(newValue);
-    setScore(Math.abs(newValue - sliderTwoTarget));
-    setGameCount((currentCount) => currentCount + 1);
+    const roundScore = Math.round(newValue)
+    setSliderTwoValue(roundScore);
+    setScore(Math.abs(roundScore - sliderTwoTarget));
+    if(roundScore > 0) {setGameCount((currentCount) => currentCount + 1)}
   };
   const handleSliderThreeChange = (event, newValue) => {
-    setSliderThreeValue(newValue);
-    setScore(Math.abs(newValue - sliderThreeTarget));
-    setGameCount((currentCount) => currentCount + 1);
+    const roundScore = Math.round(newValue)
+    setSliderThreeValue(roundScore);
+    setScore(Math.abs(roundScore - sliderThreeTarget));
+    if(roundScore > 0) { setGameCount((currentCount) => currentCount + 1)}
   };
   const handleSliderFourChange = (event, newValue) => {
-    setSliderFourValue(newValue);
-    setScore(Math.abs(newValue - sliderFourTarget));
-    setGameCount((currentCount) => currentCount + 1);
+    const roundScore = Math.round(newValue)
+    setSliderFourValue(roundScore);
+    setScore(Math.abs(roundScore - sliderFourTarget));
+    if(roundScore > 0) {setGameCount((currentCount) => currentCount + 1)}
   };
   const handleSliderFiveChange = (event, newValue) => {
-    setSliderFiveValue(newValue);
-    setScore(Math.abs(newValue - sliderFiveTarget));
-    setGameCount((currentCount) => currentCount + 1);
+    const roundScore = Math.round(newValue)
+    setSliderFiveValue(roundScore);
+    setScore(Math.abs(roundScore - sliderFiveTarget));
+    if(newValue > 0) {setGameCount((currentCount) => currentCount + 1)}
   };
 
+  
   useEffect(() => {
-    setTotalScore((currentTotal) => currentTotal + score);
-  }, [gameCount]);
-
-  useEffect(() => {
+    setTotalScore((currentTotal) => currentTotal + Math.round(score));
     if(gameCount === 5) {
-      const gameStats = [gameId, totalScore + score, 
+      const gameStats = [gameId, totalScore + Math.round(score), 
         sliderOneTarget, sliderOneValue, Math.abs(sliderOneValue-sliderOneTarget),
         sliderTwoTarget, sliderTwoValue, Math.abs(sliderTwoValue-sliderTwoTarget),
         sliderThreeTarget, sliderThreeValue, Math.abs(sliderThreeValue-sliderThreeTarget),
@@ -71,21 +75,19 @@ export default function DailyGame({ gameId, gameDay }) {
   const storedScoreHistory = localStorage.getItem('scoreHistory');
   let scoreHistory = storedScoreHistory ? JSON.parse(storedScoreHistory) : [];
   
-  const updateScoreHistory = (score) => {
-    if (score === 0) {
+  const updateScoreHistory = () => {
+    if (totalScore+score === 0) {
       scoreHistory[0] = (scoreHistory[0] || 0) + 1;
-    } else if (totalScore>= 1 && totalScore<= 10) {
+    } else if (totalScore+score>= 1 && (totalScore+score)<= 5) {
       scoreHistory[1] = (scoreHistory[1] || 0) + 1;
-    } else if (totalScore>= 11 && totalScore<= 20) {
+    } else if (totalScore+score>= 6 && totalScore+score<= 10) {
       scoreHistory[2] = (scoreHistory[2] || 0) + 1;
-    } else if (totalScore>= 21 && totalScore<= 30) {
+    } else if (totalScore+score>= 11 && totalScore+score<= 15) {
       scoreHistory[3] = (scoreHistory[3] || 0) + 1;
-    } else if (totalScore>= 31 && totalScore<= 40) {
+    } else if (totalScore+score>= 16 && totalScore+score<= 20) {
       scoreHistory[4] = (scoreHistory[4] || 0) + 1;
-    } else if (totalScore>= 41 && totalScore<= 50) {
-      scoreHistory[5] = (scoreHistory[5] || 0) + 1;
     } else {
-      scoreHistory[6] = (scoreHistory[6] || 0) + 1;
+      scoreHistory[5] = (scoreHistory[5] || 0) + 1;
     }
   
     localStorage.setItem('scoreHistory', JSON.stringify(scoreHistory));
@@ -101,6 +103,7 @@ export default function DailyGame({ gameId, gameDay }) {
         setSliderThreeValue(storedGameStatsArr[9])
         setSliderFourValue(storedGameStatsArr[12])
         setSliderFiveValue(storedGameStatsArr[15])
+        setShowTotal(storedGameStatsArr[1])
       }
     }
   })
@@ -108,7 +111,7 @@ export default function DailyGame({ gameId, gameDay }) {
   return (
     <>
       <section className="game-container">
-        <p>0-100. Slide to the target and avoid penalty points. Aim low.</p>
+        <h1 className="page-header">Daily game</h1>
         <section className="slider-container">
           {sliderOneValue === 0 ? (
             <p className="slider-instruction">Slide to {sliderOneTarget}</p>
@@ -122,6 +125,8 @@ export default function DailyGame({ gameId, gameDay }) {
           {sliderOneValue === 0 ? (
             <Slider
               className="slider"
+              aria-label="Slider 1"
+              step={0.1}
               valueLabelDisplay="off"
               color="success"
               min={0}
@@ -155,6 +160,8 @@ export default function DailyGame({ gameId, gameDay }) {
           {sliderTwoValue === 0 ? (
             <Slider
               className="slider"
+              aria-label="Slider 2"
+              step={0.1}
               valueLabelDisplay="off"
               color="primary"
               min={0}
@@ -188,6 +195,8 @@ export default function DailyGame({ gameId, gameDay }) {
           {sliderThreeValue === 0 ? (
             <Slider
               className="slider"
+              aria-label="Slider 3"
+              step={0.1}
               valueLabelDisplay="off"
               color="secondary"
               min={0}
@@ -221,6 +230,8 @@ export default function DailyGame({ gameId, gameDay }) {
           {sliderFourValue === 0 ? (
             <Slider
               className="slider"
+              aria-label="Slider 4"
+              step={0.1}
               valueLabelDisplay="off"
               color="error"
               min={0}
@@ -241,7 +252,7 @@ export default function DailyGame({ gameId, gameDay }) {
           )}
         </section>
 
-        <section className="slider-container">
+        <section className="slider-container" style={{marginBottom:30}}>
           {sliderFiveValue === 0 ? (
             <p className="slider-instruction">Slide to {sliderFiveTarget}</p>
           ) : (
@@ -254,6 +265,8 @@ export default function DailyGame({ gameId, gameDay }) {
           {sliderFiveValue === 0 ? (
             <Slider
               className="slider"
+              aria-label="Slider 5"
+              step={0.1}
               valueLabelDisplay="off"
               color="warning"
               min={0}
@@ -273,6 +286,9 @@ export default function DailyGame({ gameId, gameDay }) {
             </>
           )}
         </section>
+        {showTotal ? <p style={{fontWeight:600}}>Your score is {showTotal}</p> : null}
+        <p>0-100. Slide to the target and avoid penalty points. Aim low.</p>
+        <p>{`The game is updated daily. Return tomorrow to see if you can beat today's score.`}</p>
       </section>
     </>
   );

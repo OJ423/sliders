@@ -7,7 +7,7 @@ export default function Help() {
   const exampleNum = 27
 
   const handleValueChange = (event, newValue) => {
-    setExampleValue(newValue)
+    setExampleValue(Math.round(newValue))
   }
 
   return(
@@ -18,6 +18,8 @@ export default function Help() {
     <p>Here, try it yourself. Go for {exampleNum}</p> 
     <Slider
       className="slider"
+      aria-label="example game slider"
+      step={0.1}
       valueLabelDisplay="off"
       color="success"
       min={0}

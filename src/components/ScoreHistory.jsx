@@ -19,36 +19,32 @@ export default function ScoreHistory() {
   const dataset = [
     {
       range: '0',
-      score: storedGameHistoryArr[0]
+      score: +storedGameHistoryArr[0]
     },
     {
-      range: '1-10',
-      score: storedGameHistoryArr[1]
+      range: '1-5',
+      score: +storedGameHistoryArr[1]
     },
     {
-      range: '11-20',
-      score: storedGameHistoryArr[2]
+      range: '6-10',
+      score: +storedGameHistoryArr[2]
     },
     {
-      range: '21-30',
-      score: storedGameHistoryArr[3]
+      range: '11-15',
+      score: +storedGameHistoryArr[3]
     },
     {
-      range: '31-40',
-      score: storedGameHistoryArr[4]
+      range: '16-20',
+      score: +storedGameHistoryArr[4]
     },
     {
-      range: '41-50',
-      score: storedGameHistoryArr[5]
-    },
-    {
-      range: `50+`,
-      score: storedGameHistoryArr[6]
+      range: '20+',
+      score: +storedGameHistoryArr[5]
     }
   ]
 
   return (
-    <section className="results-chart">
+    <section>
       <BarChart
         margin={{left:40,right:0,top:0,bottom:0}}
         dataset={dataset}
@@ -86,39 +82,36 @@ export default function ScoreHistory() {
       <h3>YOUR SCORE BREAKDOWN...</h3>
       <article className="stats-summary ">
         <div className="stats-box">
-          <p className="stats-percentage">{Math.round((storedGameHistoryArr[0]/totalGames)*100)}%</p>
+          {storedGameHistoryArr[0] === 0 ? <p className="stats-percentage">0%</p>:
+          <p className="stats-percentage">{Math.round((storedGameHistoryArr[0]/totalGames)*100)}%</p>}
           <p className="stat-number">{storedGameHistoryArr[0]}</p>
           <p>0</p>
         </div>
         <div className="stats-box">
-          <p className="stats-percentage">{Math.round((storedGameHistoryArr[1]/totalGames)*100)}%</p>
+          {storedGameHistoryArr[1] === 0 ? <p className="stats-percentage">0%</p>:
+          <p className="stats-percentage">{Math.round((storedGameHistoryArr[1]/totalGames)*100)}%</p>}
           <p className="stat-number">{storedGameHistoryArr[1]}</p>
-          <p>1-10</p>
+          <p>1-5</p>
         </div>
         <div className="stats-box">
           <p className="stats-percentage">{Math.round((storedGameHistoryArr[2]/totalGames)*100)}%</p>
           <p className="stat-number">{storedGameHistoryArr[2]}</p>
-          <p>11-20</p>
+          <p>6-10</p>
         </div>
         <div className="stats-box">
           <p className="stats-percentage">{Math.round((storedGameHistoryArr[3]/totalGames)*100)}%</p>
           <p className="stat-number">{storedGameHistoryArr[3]}</p>
-          <p>21-30</p>
+          <p>11-15</p>
         </div>
         <div className="stats-box">
           <p className="stats-percentage">{Math.round((storedGameHistoryArr[4]/totalGames)*100)}%</p>
           <p className="stat-number">{storedGameHistoryArr[4]}</p>
-          <p>31-40</p>
+          <p>16-20</p>
         </div>
         <div className="stats-box">
           <p className="stats-percentage">{Math.round((storedGameHistoryArr[5]/totalGames)*100)}%</p>
           <p className="stat-number">{storedGameHistoryArr[5]}</p>
-          <p>41-50</p>
-        </div>
-        <div className="stats-box">
-          <p className="stats-percentage">{Math.round((storedGameHistoryArr[6]/totalGames)*100)}%</p>
-          <p className="stat-number">{storedGameHistoryArr[6]}</p>
-          <p>50+</p>
+          <p>20+</p>
         </div>
       </article>
     </section>

@@ -20,30 +20,45 @@ export default function FreePlay() {
   const [restart, setRestart] = useState(false)
   
   const handleSliderOneChange = (event, newValue) => {
-    setSliderOneValue(newValue)
-    setScore(Math.abs(newValue - sliderOneTarget))
-    setGameCount((currentCount) => currentCount + 1)
+    const sliderValue = Math.round(newValue)
+    setSliderOneValue(sliderValue)
+    if(sliderValue > 0) {
+      setScore(Math.abs(sliderValue - sliderOneTarget))
+      setGameCount((currentCount) => currentCount + 1)
+    }
   }
   const handleSliderTwoChange = (event, newValue) => {
-    setSliderTwoValue(newValue)
-    setScore(Math.abs(newValue - sliderTwoTarget))
-    setGameCount((currentCount) => currentCount + 1)
+    const sliderValue = Math.round(newValue)
+    setSliderTwoValue(sliderValue)
+    if(sliderValue > 0) {
+      setScore(Math.abs(sliderValue - sliderTwoTarget))
+      setGameCount((currentCount) => currentCount + 1)
+    }
   }
   const handleSliderThreeChange = (event, newValue) => {
-    setSliderThreeValue(newValue)
-    setScore(Math.abs(newValue - sliderThreeTarget))
-    setGameCount((currentCount) => currentCount + 1)
+    const sliderValue = Math.round(newValue)
+    setSliderThreeValue(sliderValue)
+    if(sliderValue > 0) {
+      setScore(Math.abs(sliderValue - sliderThreeTarget))
+      setGameCount((currentCount) => currentCount + 1)
+    }
   }
 
   const handleSliderFourChange = (event, newValue) => {
-    setSliderFourValue(newValue)
-    setScore(Math.abs(newValue - sliderFourTarget))
-    setGameCount((currentCount) => currentCount + 1)
+    const sliderValue = Math.round(newValue)
+    setSliderFourValue(sliderValue)
+    if(sliderValue > 0) {
+      setScore(Math.abs(sliderValue - sliderFourTarget))
+      setGameCount((currentCount) => currentCount + 1)
+    }
   }
   const handleSliderFiveChange = (event, newValue) => {
-    setSliderFiveValue(newValue)
-    setScore(Math.abs(newValue - sliderFiveTarget))
-    setGameCount((currentCount) => currentCount + 1)
+    const sliderValue = Math.round(newValue)
+    setSliderFiveValue(sliderValue)
+    if(sliderValue > 0) {
+      setScore(Math.abs(sliderValue - sliderFiveTarget))
+      setGameCount((currentCount) => currentCount + 1)
+    }
   }
 
 
@@ -58,11 +73,11 @@ export default function FreePlay() {
   }
   
   useEffect(() => {
-    setSliderOneTarget(Math.floor((Math.random() * 100) + 1))
-    setSliderTwoTarget(Math.floor((Math.random() * 100) + 1))
-    setSliderThreeTarget(Math.floor((Math.random() * 100) + 1))
-    setSliderFourTarget(Math.floor((Math.random() * 100) + 1))
-    setSliderFiveTarget(Math.floor((Math.random() * 100) + 1))
+    setSliderOneTarget(Math.floor((Math.random() * 99) + 1))
+    setSliderTwoTarget(Math.floor((Math.random() * 99) + 1))
+    setSliderThreeTarget(Math.floor((Math.random() * 99) + 1))
+    setSliderFourTarget(Math.floor((Math.random() * 99) + 1))
+    setSliderFiveTarget(Math.floor((Math.random() * 99) + 1))
   },[restart])
 
   useEffect(() => {
@@ -72,7 +87,7 @@ export default function FreePlay() {
   return (
     <>
     <section className='game-container'>
-      <p>Practice Sliders all you want.</p>
+    <h1 className="page-header">Practice</h1>
       <section className='slider-container'>
         {sliderOneValue === 0 ? 
         <p className='slider-instruction'>Slide to {sliderOneTarget}</p>
@@ -83,6 +98,8 @@ export default function FreePlay() {
         {sliderOneValue === 0 ? 
         <Slider
           className='slider'
+          aria-label="Slider 1"
+          step={0.1}
           valueLabelDisplay="off"
           color="success"
           min={0}
@@ -113,6 +130,8 @@ export default function FreePlay() {
         {sliderTwoValue === 0 ? 
         <Slider
           className='slider'
+          aria-label="Slider 2"
+          step={0.1}
           valueLabelDisplay="off"
           color="primary"
           min={0}
@@ -143,6 +162,8 @@ export default function FreePlay() {
         {sliderThreeValue === 0 ? 
         <Slider
           className='slider'
+          aria-label="Slider 3"
+          step={0.1}
           valueLabelDisplay="off"
           color="secondary"
           min={0}
@@ -173,6 +194,8 @@ export default function FreePlay() {
         {sliderFourValue === 0 ? 
         <Slider
           className='slider'
+          aria-label="Slider 4"
+          step={0.1}
           valueLabelDisplay="off"
           color="error"
           min={0}
@@ -203,6 +226,8 @@ export default function FreePlay() {
         {sliderFiveValue === 0 ? 
         <Slider
           className='slider'
+          aria-label="Slider 5"
+          step={0.1}
           valueLabelDisplay="off"
           color="warning"
           min={0}
