@@ -17,7 +17,6 @@ function App() {
   const gameDay = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
   const storedScoreHistory = localStorage.getItem('scoreHistory');
   let scoreHistory = storedScoreHistory ? JSON.parse(storedScoreHistory) : null;
-
   useEffect(() => {
     if (!scoreHistory) {
       const emptyScores = [0,0,0,0,0,0]
@@ -25,7 +24,7 @@ function App() {
     }
     setGameId((currentID) => currentID + gameDay +1);
   }, []);
-
+  
   return (
     <>
     <Navigation/>

@@ -1,20 +1,20 @@
 import { Slider } from "@mui/material";
 import { useEffect, useState } from "react";
-import { sliderOneTargets, sliderTwoTargets, sliderThreeTargets, sliderFourTargets, sliderFiveTargets } from "./DailyTargets";
+import { generateDailyTargets } from "./DailyTargets";
 import { useNavigate } from "react-router-dom";
 
 export default function DailyGame({ gameId, gameDay }) {
+// Users Scores
   const [sliderOneValue, setSliderOneValue] = useState(0);
   const [sliderTwoValue, setSliderTwoValue] = useState(0);
   const [sliderThreeValue, setSliderThreeValue] = useState(0);
   const [sliderFourValue, setSliderFourValue] = useState(0);
   const [sliderFiveValue, setSliderFiveValue] = useState(0);
-  
-  const [sliderOneTarget, setSliderOneTarget] = useState(sliderOneTargets[gameDay]);
-  const [sliderTwoTarget, setSliderTwoTarget] = useState(sliderTwoTargets[gameDay]);
-  const [sliderThreeTarget, setSliderThreeTarget] = useState(sliderThreeTargets[gameDay]);
-  const [sliderFourTarget, setSliderFourTarget] = useState(sliderFourTargets[gameDay]);
-  const [sliderFiveTarget, setSliderFiveTarget] = useState(sliderFiveTargets[gameDay]);
+// Target Generation
+  const today = new Date();
+  const target = generateDailyTargets(gameId, today,5, 1, 99);
+  console.log(target)
+
   
   const [score, setScore] = useState(0);
   const [totalScore, setTotalScore] = useState(0);
@@ -25,31 +25,31 @@ export default function DailyGame({ gameId, gameDay }) {
   const handleSliderOneChange = (event, newValue) => {
     const roundScore = Math.round(newValue)
     setSliderOneValue(roundScore);
-    setScore(Math.abs(roundScore - sliderOneTarget));
+    setScore(Math.abs(roundScore - target[0]));
     if(roundScore > 0) {setGameCount((currentCount) => currentCount + 1)}
   };
   const handleSliderTwoChange = (event, newValue) => {
     const roundScore = Math.round(newValue)
     setSliderTwoValue(roundScore);
-    setScore(Math.abs(roundScore - sliderTwoTarget));
+    setScore(Math.abs(roundScore - target[1]));
     if(roundScore > 0) {setGameCount((currentCount) => currentCount + 1)}
   };
   const handleSliderThreeChange = (event, newValue) => {
     const roundScore = Math.round(newValue)
     setSliderThreeValue(roundScore);
-    setScore(Math.abs(roundScore - sliderThreeTarget));
+    setScore(Math.abs(roundScore - target[2]));
     if(roundScore > 0) { setGameCount((currentCount) => currentCount + 1)}
   };
   const handleSliderFourChange = (event, newValue) => {
     const roundScore = Math.round(newValue)
     setSliderFourValue(roundScore);
-    setScore(Math.abs(roundScore - sliderFourTarget));
+    setScore(Math.abs(roundScore - target[3]));
     if(roundScore > 0) {setGameCount((currentCount) => currentCount + 1)}
   };
   const handleSliderFiveChange = (event, newValue) => {
     const roundScore = Math.round(newValue)
     setSliderFiveValue(roundScore);
-    setScore(Math.abs(roundScore - sliderFiveTarget));
+    setScore(Math.abs(roundScore - target[4]));
     if(newValue > 0) {setGameCount((currentCount) => currentCount + 1)}
   };
 
@@ -58,11 +58,11 @@ export default function DailyGame({ gameId, gameDay }) {
     setTotalScore((currentTotal) => currentTotal + Math.round(score));
     if(gameCount === 5) {
       const gameStats = [gameId, totalScore + Math.round(score), 
-        sliderOneTarget, sliderOneValue, Math.abs(sliderOneValue-sliderOneTarget),
-        sliderTwoTarget, sliderTwoValue, Math.abs(sliderTwoValue-sliderTwoTarget),
-        sliderThreeTarget, sliderThreeValue, Math.abs(sliderThreeValue-sliderThreeTarget),
-        sliderFourTarget, sliderFourValue, Math.abs(sliderFourValue-sliderFourTarget),
-        sliderFiveTarget, sliderFiveValue, Math.abs(sliderFiveValue-sliderFiveTarget),
+        target[0], sliderOneValue, Math.abs(sliderOneValue-target[0]),
+        target[1], sliderTwoValue, Math.abs(sliderTwoValue-target[1]),
+        target[2], sliderThreeValue, Math.abs(sliderThreeValue-target[2]),
+        target[3], sliderFourValue, Math.abs(sliderFourValue-target[3]),
+        target[4], sliderFiveValue, Math.abs(sliderFiveValue-target[4]),
       ]
       const gameStatArr = JSON.stringify(gameStats)
       localStorage.setItem('gameStats', gameStatArr)
@@ -107,18 +107,17 @@ export default function DailyGame({ gameId, gameDay }) {
       }
     }
   })
-
   return (
     <>
       <section className="game-container">
         <h1 className="page-header">Daily game</h1>
         <section className="slider-container">
           {sliderOneValue === 0 ? (
-            <p className="slider-instruction">Slide to {sliderOneTarget}</p>
+            <p className="slider-instruction">Slide to {target[0]}</p>
           ) : (
             <p className="slider-instruction">
-              Target: {sliderOneTarget}. Attempt: {sliderOneValue}. Penalty:{" "}
-              {Math.abs(sliderOneTarget - sliderOneValue)}
+              Target: {target[0]}. Attempt: {sliderOneValue}. Penalty:{" "}
+              {Math.abs(target[0] - sliderOneValue)}
             </p>
           )}
           <h4>1.</h4>
@@ -149,11 +148,11 @@ export default function DailyGame({ gameId, gameDay }) {
 
         <section className="slider-container">
           {sliderTwoValue === 0 ? (
-            <p className="slider-instruction">Slide to {sliderTwoTarget}</p>
+            <p className="slider-instruction">Slide to {target[1]}</p>
           ) : (
             <p className="slider-instruction">
-              Target: {sliderTwoTarget}. Attempt: {sliderTwoValue}. Penalty:{" "}
-              {Math.abs(sliderTwoTarget - sliderTwoValue)}
+              Target: {target[1]}. Attempt: {sliderTwoValue}. Penalty:{" "}
+              {Math.abs(target[1] - sliderTwoValue)}
             </p>
           )}
           <h4>2.</h4>
@@ -184,11 +183,11 @@ export default function DailyGame({ gameId, gameDay }) {
 
         <section className="slider-container">
           {sliderThreeValue === 0 ? (
-            <p className="slider-instruction">Slide to {sliderThreeTarget}</p>
+            <p className="slider-instruction">Slide to {target[2]}</p>
           ) : (
             <p className="slider-instruction">
-              Target: {sliderThreeTarget}. Attempt: {sliderThreeValue}. Penalty:{" "}
-              {Math.abs(sliderThreeTarget - sliderThreeValue)}
+              Target: {target[2]}. Attempt: {sliderThreeValue}. Penalty:{" "}
+              {Math.abs(target[2] - sliderThreeValue)}
             </p>
           )}
           <h4>3.</h4>
@@ -219,11 +218,11 @@ export default function DailyGame({ gameId, gameDay }) {
 
         <section className="slider-container">
           {sliderFourValue === 0 ? (
-            <p className="slider-instruction">Slide to {sliderFourTarget}</p>
+            <p className="slider-instruction">Slide to {target[3]}</p>
           ) : (
             <p className="slider-instruction">
-              Target: {sliderFourTarget}. Attempt: {sliderFourValue}. Penalty:{" "}
-              {Math.abs(sliderFourTarget - sliderFourValue)}
+              Target: {target[3]}. Attempt: {sliderFourValue}. Penalty:{" "}
+              {Math.abs(target[3] - sliderFourValue)}
             </p>
           )}
           <h4>4.</h4>
@@ -254,11 +253,11 @@ export default function DailyGame({ gameId, gameDay }) {
 
         <section className="slider-container" style={{marginBottom:30}}>
           {sliderFiveValue === 0 ? (
-            <p className="slider-instruction">Slide to {sliderFiveTarget}</p>
+            <p className="slider-instruction">Slide to {target[4]}</p>
           ) : (
             <p className="slider-instruction">
-              Target: {sliderFiveTarget}. Attempt: {sliderFiveValue}. Penalty:{" "}
-              {Math.abs(sliderFiveTarget - sliderFiveValue)}
+              Target: {target[4]}. Attempt: {sliderFiveValue}. Penalty:{" "}
+              {Math.abs(target[4] - sliderFiveValue)}
             </p>
           )}
           <h4>5.</h4>
