@@ -10,21 +10,17 @@ export const generateDailyTargets = (gameId, date, count = 5, min = 1, max = 99)
   while (targets.size < count) {
     // Combine gameId, date, and an index to create a unique input string
     const inputString = `${gameId}-${dateString}-${index}`;
-    console.log("Input string:", inputString);
 
     const hash = sha256(inputString).toString();
-    console.log("Hash:", hash);
 
     // Convert the first 8 characters of the hash to an integer
     const hashValue = parseInt(hash.substring(0, 8), 16);
 
     // Map the hash value to the range [min, max]
     const target = min + (hashValue % range);
-    console.log("Generated target:", target);
 
     // Ensure the target is unique
     if (!targets.has(target)) {
-      console.log("Adding target:", target);
       targets.add(target);
     } else {
       console.log("Duplicate target detected, skipping:", target);
@@ -33,6 +29,5 @@ export const generateDailyTargets = (gameId, date, count = 5, min = 1, max = 99)
     index++;
   }
 
-  console.log("Final targets:", Array.from(targets));
   return Array.from(targets);
 };

@@ -1,11 +1,14 @@
+/* eslint-disable react/prop-types */
+
 import {WhatsappShareButton, WhatsappIcon, TwitterShareButton, TwitterIcon, FacebookShareButton, FacebookIcon, LinkedinShareButton, LinkedinIcon, RedditShareButton, RedditIcon} from 'react-share'
 import { CiMedicalClipboard } from "react-icons/ci";
+import React from "react"
 
 export default function SocialShare({share, setShare}) {
   const storedGameStatsString = localStorage.getItem('gameStats');
   const storedGameStatsArr = JSON.parse(storedGameStatsString);
   const shareURL = `https://slidersgame.com`
-  const title = `I played Sliders and scored ${storedGameStatsArr[1]}
+  const title = `My Sliders Game score is ${storedGameStatsArr[1]}
 1. Target: ${storedGameStatsArr[2]}, Score: ${storedGameStatsArr[3]}, Penalty: ${storedGameStatsArr[4]}
 2. Target: ${storedGameStatsArr[5]}, Score: ${storedGameStatsArr[6]}, Penalty: ${storedGameStatsArr[7]}
 3. Target: ${storedGameStatsArr[8]}, Score: ${storedGameStatsArr[9]}, Penalty: ${storedGameStatsArr[10]}
@@ -45,7 +48,7 @@ ${shareURL}`)
           <CiMedicalClipboard aria-label="Copy your stats to the clipboard" onClick={handleCopyToClipBoard} className='clipboard-icon' size={70}/>
           <p style={{textAlign:'left'}}>Copy to clipboard</p>
         </div>
-        <p>If you're sharing on Facebook or LinkedIn you need to paste your results into the post body (these are copied automatically when you click share).</p>
+        <p>If you&apos;re sharing on Facebook or LinkedIn you need to paste your results into the post body (these are copied automatically when you click share).</p>
       </article>
     </section>
   )

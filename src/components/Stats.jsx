@@ -4,6 +4,7 @@ import { IoShareSocial } from "react-icons/io5";
 import SocialShare from "./SocialShare";
 import { Slider } from "@mui/material";
 import { Link } from "react-router-dom";
+import React from "react"
 
 
 export default function Stats() {
@@ -16,8 +17,8 @@ export default function Stats() {
   return(
     !storedGameStatsArr ? 
       <section className="stats-total-container">
-        <h1>You've not played</h1>
-        <p>Play the daily game to generate some stats to brag about. Read <Link to='/help'>how to play</Link> and <Link to='/practice'>have a practice</Link> so you're ready to smash the daily challenge</p>
+        <h1>You&apos;ve not played</h1>
+        <p>Play the daily game to generate some stats to brag about. Read <Link to='/help'>how to play</Link> and <Link to='/practice'>have a practice</Link> so you&apos;re ready to smash the daily challenge</p>
         <Link to='/'>
           <button>Daily Game</button>
         </Link>
@@ -68,7 +69,7 @@ export default function Stats() {
         <button style={{boxSizing:"border-box"}} onClick={handleShare}>Share <IoShareSocial style={{marginBottom:-2}} /></button>
         <SocialShare share={share} setShare={setShare} />
     </section>
-      <p>Here's how you did...</p>
+      <p>Here&apos;s how you did...</p>
       <section className="slider-container">
             <p className="slider-instruction">
               Target: {storedGameStatsArr[2]}. Attempt: {storedGameStatsArr[3]}. Penalty:{storedGameStatsArr[4]}

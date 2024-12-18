@@ -2,6 +2,7 @@ import { Slider } from "@mui/material";
 import { useEffect, useState } from "react";
 import { generateDailyTargets } from "./DailyTargets";
 import { useNavigate } from "react-router-dom";
+import React from "react"
 
 export default function DailyGame({ gameId, gameDay }) {
 // Users Scores
@@ -13,7 +14,6 @@ export default function DailyGame({ gameId, gameDay }) {
 // Target Generation
   const today = new Date();
   const target = generateDailyTargets(gameId, today,5, 1, 99);
-  console.log(target)
 
   
   const [score, setScore] = useState(0);
@@ -67,6 +67,7 @@ export default function DailyGame({ gameId, gameDay }) {
       const gameStatArr = JSON.stringify(gameStats)
       localStorage.setItem('gameStats', gameStatArr)
       updateScoreHistory(totalScore)
+      updateLowScores()
       setGameCount(0)
       navigate("/stats")
     }
@@ -75,7 +76,7 @@ export default function DailyGame({ gameId, gameDay }) {
   const storedScoreHistory = localStorage.getItem('scoreHistory');
   let scoreHistory = storedScoreHistory ? JSON.parse(storedScoreHistory) : [];
   
-  const updateScoreHistory = () => {
+  const updateScoreHistory = (totalScore) => {
     if (totalScore+score === 0) {
       scoreHistory[0] = (scoreHistory[0] || 0) + 1;
     } else if (totalScore+score>= 1 && (totalScore+score)<= 5) {
@@ -92,6 +93,21 @@ export default function DailyGame({ gameId, gameDay }) {
   
     localStorage.setItem('scoreHistory', JSON.stringify(scoreHistory));
   };
+
+  const storedLowScores = localStorage.getItem("lowScores");
+  let lowScores = storedLowScores ? JSON.parse(storedLowScores) : [];
+
+  const updateLowScores = () => {
+    if (totalScore+score > 5) return;
+    else if (totalScore+score === 0) lowScores[0] = (lowScores[0] || 0) + 1;
+    else if (totalScore+score === 1) lowScores[1] = (lowScores[1] || 0) + 1;
+    else if (totalScore+score === 2) lowScores[2] = (lowScores[2] || 0) + 1;
+    else if (totalScore+score === 3) lowScores[3] = (lowScores[3] || 0) + 1;
+    else if (totalScore+score === 4) lowScores[4] = (lowScores[4] || 0) + 1;
+    else if (totalScore+score === 5) lowScores[5] = (lowScores[5] || 0) + 1;
+
+    localStorage.setItem("lowScores", JSON.stringify(lowScores))
+  }
   
   useEffect(() => {
     const storedGameStatsString = localStorage.getItem('gameStats');
